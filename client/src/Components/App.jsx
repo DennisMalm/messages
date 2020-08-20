@@ -1,13 +1,26 @@
-import React from 'react';
-import Store from '../Store';
+import React, {useContext} from 'react';
+import { UserInfoContext } from '../Store';
+import Register from './Register';
+
+
 
 function App() {
+
+	const [userInfo,] = useContext(UserInfoContext);
+	
+	const checkUser = () => {
+		console.log('From App.jsx');
+		console.log(userInfo);
+	};
 	return (
-		<Store>
+		<div>
 			<div>
 				<h1>Hai</h1>
 			</div>
-		</Store>
+			<div>
+				<Register logUser={checkUser}></Register>
+			</div>
+		</div>
 	);
 }
 
