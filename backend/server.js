@@ -8,13 +8,14 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+require('dotenv').config()
 const User = require('./user');
 //--------------End of Imports-----------
 
 const app = express();
 
 mongoose.connect(
-	'mongodb+srv://twittering:fisk@splice-dxgjp.mongodb.net/twittering?retryWrites=true&w=majority',
+	process.env.MONGO,
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
