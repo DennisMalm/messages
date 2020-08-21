@@ -1,27 +1,15 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { UserInfoContext } from '../Store';
-import Register from './Register';
-
-
+import Landing from './Landing';
 
 function App() {
+	const [userInfo] = useContext(UserInfoContext);
 
-	const [userInfo,] = useContext(UserInfoContext);
-	
 	const checkUser = () => {
-		console.log('From App.jsx');
+		console.log('Global state - From App.jsx');
 		console.log(userInfo);
 	};
-	return (
-		<div>
-			<div>
-				<h1>Hai</h1>
-			</div>
-			<div>
-				<Register logUser={checkUser}></Register>
-			</div>
-		</div>
-	);
+	return <Landing logUser={checkUser}></Landing>;
 }
 
 export default App;
