@@ -1,6 +1,5 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { UserInfoContext } from '../Store';
-import Register from './Register';
 import Login from './Login'
 import Heading from './Heading'
 
@@ -21,7 +20,7 @@ function Landing() {
 				<Heading></Heading>
 			</div>
 			<div>
-				{ !login ? <Login logUser={checkUser} regUser={setLogin}></Login> : <Register logUser={checkUser} regUser={setLogin}></Register>}
+				<Login logUser={checkUser}></Login>
 			</div>
 		</div>
 	);

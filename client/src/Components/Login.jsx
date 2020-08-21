@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { UserInfoContext } from '../Store';
+import '../Styles/Login.css';
 function Login(prop) {
 	// Global
 	const [, setUserInfo] = useContext(UserInfoContext);
 	// Local
 	const [localInfo, setLocalInfo] = useState({ username: '', password: '' });
-	//const [another, setAnother] = useState(false);
+	const [another, setAnother] = useState(false);
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 
@@ -27,18 +28,16 @@ function Login(prop) {
 	return (
 		<div className='wrapper fadeInDown'>
 			<div id='formContent'>
-				<div className='fadeIn first'>
-					<img src='' id='icon' alt='User Icon' />
-				</div>
+				<div className='fadeIn first'></div>
 				<form>
 					<input
 						onChange={handleChange}
 						type='text'
 						id='login'
 						className='fadeIn second'
-						name='login'
+						name='username'
 						value={localInfo.username}
-						placeholder='login'
+						placeholder='Name'
 					></input>
 					<input
 						onChange={handleChange}
@@ -49,14 +48,16 @@ function Login(prop) {
 						value={localInfo.password}
 						placeholder='password'
 					></input>
-					<input
+					<button
 						onClick={handleSubmit}
 						type='submit'
-						className='fadeIn fourth'
-					></input>
+						className='fadeIn fourth btn-1'
+					>
+						Login
+					</button>
 				</form>
 				<div id='formFooter'>
-					<a className='underlineHover' href='#'>
+					<a className='underlineHover' href='#top'>
 						Don't have an account?
 					</a>
 				</div>
