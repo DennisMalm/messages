@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { UserInfoContext } from '../Store';
 import '../Styles/Login.css';
-function Login(prop) {
+function Login(props) {
 	// Global
 	const [, setUserInfo] = useContext(UserInfoContext);
 	// Local
 	const [localInfo, setLocalInfo] = useState({ username: '', password: '' });
-	const [another, setAnother] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(false);
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 
@@ -22,7 +22,7 @@ function Login(prop) {
 		console.log('Local state from Register.jsx');
 		console.log(localInfo);
 		setUserInfo(localInfo);
-		prop.logUser();
+		props.logUser();
 	};
 
 	return (
@@ -53,12 +53,18 @@ function Login(prop) {
 						type='submit'
 						className='fadeIn fourth btn-1'
 					>
-						Login
+						{loggedIn ? 'Login' : 'Register'}
 					</button>
 				</form>
 				<div id='formFooter'>
-					<a className='underlineHover' href='#top'>
-						Don't have an account?
+					<a
+						onClick={() => {
+							loggedIn ? setLoggedIn(false) : setLoggedIn(true);
+						}}
+						className='underlineHover'
+						href='#top'
+					>
+						{loggedIn ? 'Don´t have an account?' : 'Already have an account?'}
 					</a>
 				</div>
 			</div>

@@ -1,15 +1,12 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { UserInfoContext } from '../Store';
-import Login from './Login'
-import Heading from './Heading'
-
-
+import Login from './Login';
+import Heading from './Heading';
 
 function Landing() {
+	const [userInfo] = useContext(UserInfoContext);
+	//const [login, setLogin] = useState(false);
 
-    const [userInfo,] = useContext(UserInfoContext);
-    const [login, setLogin] = useState(false);
-	
 	const checkUser = () => {
 		console.log('Global state - From App.jsx');
 		console.log(userInfo);
@@ -20,7 +17,9 @@ function Landing() {
 				<Heading></Heading>
 			</div>
 			<div>
-				<Login logUser={checkUser}></Login>
+				<Login
+					
+				></Login>
 			</div>
 		</div>
 	);
