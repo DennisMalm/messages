@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
-
 export const UserInfoContext = React.createContext({});
 
 const Store = ({ children }) => {
-
-	const [userInfo, setUserInfo] = useState({ username: '', password: '' });
+	const [userInfo, setUserInfo] = useState({});
 	return (
 		<UserInfoContext.Provider value={[userInfo, setUserInfo]}>
 			{children}
@@ -20,6 +18,6 @@ export const RegPasswordContext = React.createContext(''); */
 
 /* const [regUsername, setRegUsername] = useState('');
 	const [regPassword, setRegPassword] = useState(''); */
-	/* const [loginUsername, setLoginUsername] = useState('');
+/* const [loginUsername, setLoginUsername] = useState('');
 	const [loginPassword, setLoginPassword] = useState('');
     const [data, setData] = useState(null); */

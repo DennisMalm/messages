@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { UserInfoContext } from '../Store';
 import '../Styles/Login.css';
+import { login, register, getUser } from '../connection';
+
 function Login(props) {
 	// Global
-	const [, setUserInfo] = useContext(UserInfoContext);
+	const [userInfo, setUserInfo] = useContext(UserInfoContext);
 	// Local
 	const [localInfo, setLocalInfo] = useState({ username: '', password: '' });
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggingIn, setLoggingIn] = useState(true);
+
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 
@@ -19,10 +22,17 @@ function Login(props) {
 	};
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log('Local state from Register.jsx');
+		console.log('Local state from Login/Register.jsx');
 		console.log(localInfo);
 		setUserInfo(localInfo);
 		props.logUser();
+		if (loggingIn) {
+			console.log('Login function');
+			login(localInfo);
+		} else {
+			console.log('register function');
+			register(localInfo);
+		}
 	};
 
 	return (
@@ -53,21 +63,33 @@ function Login(props) {
 						type='submit'
 						className='fadeIn fourth btn-1'
 					>
-						{loggedIn ? 'Login' : 'Register'}
+						{loggingIn ? 'Login' : 'Register'}
 					</button>
 				</form>
 				<div id='formFooter'>
 					<a
 						onClick={() => {
-							loggedIn ? setLoggedIn(false) : setLoggedIn(true);
+							loggingIn ? setLoggingIn(false) : setLoggingIn(true);
+							console.log(loggingIn);
 						}}
 						className='underlineHover'
 						href='#top'
 					>
-						{loggedIn ? 'Don´t have an account?' : 'Already have an account?'}
+						{!loggingIn ? 'Don´t have an account?' : 'Already have an account?'}
 					</a>
 				</div>
 			</div>
+			<button
+				onClick={async () => {
+					const namn = await getUser();
+					console.log(namn);
+				}}
+				type='submit'
+				className='fadeIn fourth btn-1'
+			>
+				Testa user
+			</button>
+			<div>hej</div>
 		</div>
 	);
 }
