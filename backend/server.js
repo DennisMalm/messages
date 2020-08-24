@@ -10,6 +10,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const User = require('./user');
+const Message = require('./message');
 //--------------End of Imports-----------
 
 const app = express();
@@ -52,6 +53,29 @@ require('./passportConfig')(passport);
 //----------End of Middleware-----------
 
 //------------- Routes ------------
+app.get('/message', (req, res) => {
+	Message.find((err, messages) => {
+		err ? console.log(err) : console.log('Sucessfully fetched messages.');
+	}).then((fetchedMessages) => {
+		res.json(fetchedMessages);
+	});
+});
+app.post('/message', (req, res) => {
+	if (isValidMessage(req.body)) {
+		const message = new Message({
+			name: req.body.name.toString(),
+			content: req.body.content.toString(),
+			created: new Date(),
+			likes: 0,
+		});
+		message.save();
+	} else {
+		res.status(422);
+		res.json({
+			message: 'Not a valid message.',
+		});
+	}
+});
 app.post('/login', (req, res, next) => {
 	console.log(req.body);
 	passport.authenticate('local', (err, user, info) => {
@@ -60,7 +84,7 @@ app.post('/login', (req, res, next) => {
 		else {
 			req.logIn(user, (err) => {
 				if (err) throw err;
-				res.send('Successfully authenticated User');
+				res.send('Successfully authenticated User.');
 			});
 		}
 	})(req, res, next);
@@ -87,7 +111,19 @@ app.get('/user', (req, res) => {
 	res.send(req.user); // Stores entire user object that has been authenticated
 });
 //--------End of Routes-----------
+//-------- Helper ----------------
+function isValidMessage(message) {
+	return (
+		message.name &&
+		message.name.toString().trim() !== '' &&
+		message.content &&
+		message.content.toString().trim() !== ''
+	);
+}
 
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/index.html'));
+});
 //--------Start server------------
 app.listen(5000, () => {
 	console.log('Server listening on port 5000');

@@ -1,14 +1,56 @@
 import React, { useState, useContext } from 'react';
 import { UserInfoContext } from '../Store';
 import '../Styles/Login.css';
-import { login, register, getUser } from '../connection';
+import axios from 'axios';
 
 function Login(props) {
 	// Global
-	const [userInfo, setUserInfo] = useContext(UserInfoContext);
+	const [data, setdata] = useContext(UserInfoContext);
+	//const [loggedIn, setLoggedIn] = useContext(UserInfoContext);
 	// Local
 	const [localInfo, setLocalInfo] = useState({ username: '', password: '' });
-	const [loggingIn, setLoggingIn] = useState(true);
+	const [reg, setReg] = useState(false);
+
+	// Connection methods
+	const login = (loginInfo) => {
+		console.log('Login function called');
+		axios({
+			method: 'POST',
+			data: {
+				username: loginInfo.username,
+				password: loginInfo.password,
+			},
+			withCredentials: true,
+			url: 'http://localhost:5000/login',
+		}).then((res) => {
+			console.log(res);
+			setdata(localInfo.username);
+		});
+	};
+	const register = (regInfo) => {
+		console.log('Register function called');
+		axios({
+			method: 'POST',
+			data: {
+				username: regInfo.username,
+				password: regInfo.password,
+			},
+			withCredentials: true,
+			url: 'http://localhost:5000/register',
+		}).then((res) => console.log(res));
+	};
+	const getUser = () => {
+		axios({
+			method: 'GET',
+			withCredentials: true,
+			url: 'http://localhost:5000/user',
+		}).then((res) => {
+			console.log('From Connection.js');
+			console.log(res.data);
+			setdata(res.data);
+		});
+	};
+	// Handlers
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -20,27 +62,17 @@ function Login(props) {
 			};
 		});
 	};
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		console.log('Local state from Login/Register.jsx');
 		console.log(localInfo);
-		setUserInfo(localInfo);
-		props.logUser();
-		if (loggingIn) {
-			console.log('Login function');
+		if (!reg) {
 			login(localInfo);
 		} else {
-			console.log('register function');
 			register(localInfo);
 		}
 	};
 
-	async function getStuff() {
-		const user = await getUser();
-		console.log('From login:');
-		console.log(user);
-		setUserInfo(user);
-	}
 	return (
 		<div className='wrapper fadeInDown'>
 			<div id='formContent'>
@@ -69,26 +101,24 @@ function Login(props) {
 						type='submit'
 						className='fadeIn fourth btn-1'
 					>
-						{loggingIn ? 'Login' : 'Register'}
+						{!reg ? 'Login' : 'Register'}
 					</button>
 				</form>
 				<div id='formFooter'>
 					<a
 						onClick={() => {
-							loggingIn ? setLoggingIn(false) : setLoggingIn(true);
-							console.log(loggingIn);
+							!reg ? setReg(false) : setReg(true);
 						}}
 						className='underlineHover'
 						href='#top'
 					>
-						{!loggingIn ? 'Don´t have an account?' : 'Already have an account?'}
+						{!reg ? 'Don´t have an account?' : 'Already have an account?'}
 					</a>
 				</div>
 			</div>
-			<button onClick={getStuff} type='submit' className='fadeIn fourth btn-1'>
+			<button onClick={getUser} type='submit' className='fadeIn fourth btn-1'>
 				Testa user
 			</button>
-			<div>hej</div>
 		</div>
 	);
 }

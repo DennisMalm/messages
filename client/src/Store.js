@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 export const UserInfoContext = React.createContext({});
 
 const Store = ({ children }) => {
-	const [userInfo, setUserInfo] = useState(null);
+	const [data, setData] = useState(null);
+	//const [loggedIn, setLoggedIn] = useState(false);
 	return (
-		<UserInfoContext.Provider value={[userInfo, setUserInfo]}>
+		<UserInfoContext.Provider value={[data, setData]}>
 			{children}
 		</UserInfoContext.Provider>
 	);
