@@ -24,7 +24,17 @@ export const register = (regInfo) => {
 		url: 'http://localhost:5000/register',
 	}).then((res) => console.log(res));
 };
-export const getUser = () => {
+export async function getUser() {
+	const res = await axios({
+		method: 'GET',
+		withCredentials: true,
+		url: 'http://localhost:5000/user',
+	});
+	console.log('From connection getUser:');
+	console.log(res.data);
+	return res.data;
+}
+/* export const getUser = () => {
 	axios({
 		method: 'GET',
 		withCredentials: true,
@@ -32,6 +42,6 @@ export const getUser = () => {
 	}).then((res) => {
 		console.log('From Connection.js');
 		console.log(res.data);
-		return res.data.username;
+		return res.data;
 	});
-};
+}; */

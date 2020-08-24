@@ -35,6 +35,12 @@ function Login(props) {
 		}
 	};
 
+	async function getStuff() {
+		const user = await getUser();
+		console.log('From login:');
+		console.log(user);
+		setUserInfo(user);
+	}
 	return (
 		<div className='wrapper fadeInDown'>
 			<div id='formContent'>
@@ -79,14 +85,7 @@ function Login(props) {
 					</a>
 				</div>
 			</div>
-			<button
-				onClick={async () => {
-					const namn = await getUser();
-					console.log(namn);
-				}}
-				type='submit'
-				className='fadeIn fourth btn-1'
-			>
+			<button onClick={getStuff} type='submit' className='fadeIn fourth btn-1'>
 				Testa user
 			</button>
 			<div>hej</div>

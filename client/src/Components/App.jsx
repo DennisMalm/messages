@@ -15,6 +15,7 @@ function App() {
 		<div>
 			<Heading></Heading>
 			<Login logUser={checkUser}></Login>
+			{userInfo ? <div>{userInfo.username}</div> : <div>Ing</div>}
 		</div>
 	);
 }
