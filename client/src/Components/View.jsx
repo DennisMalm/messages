@@ -1,6 +1,16 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { UserInfoContext } from '../Store';
 function View() {
-	return <div></div>;
+	const [data, setdata] = useContext(UserInfoContext);
+	return (
+		<div>
+			Hej, {data.username}
+			<button
+				onClick={() => setdata({ username: data.username, loggedIn: false })}
+			>
+				Logout
+			</button>
+		</div>
+	);
 }
 export default View;

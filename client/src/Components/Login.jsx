@@ -3,28 +3,32 @@ import { UserInfoContext } from '../Store';
 import '../Styles/Login.css';
 import axios from 'axios';
 
-function Login(props) {
+function Login() {
 	// Global
-	const [data, setdata] = useContext(UserInfoContext);
+	const [, setdata] = useContext(UserInfoContext);
 	//const [loggedIn, setLoggedIn] = useContext(UserInfoContext);
 	// Local
 	const [localInfo, setLocalInfo] = useState({ username: '', password: '' });
-	const [reg, setReg] = useState(false);
+	const [isLogin, setIslogin] = useState(true);
 
 	// Connection methods
-	const login = (loginInfo) => {
+	const login = () => {
 		console.log('Login function called');
 		axios({
 			method: 'POST',
 			data: {
-				username: loginInfo.username,
-				password: loginInfo.password,
+				username: localInfo.username,
+				password: localInfo.password,
 			},
 			withCredentials: true,
 			url: 'http://localhost:5000/login',
 		}).then((res) => {
 			console.log(res);
-			setdata(localInfo.username);
+			console.log(res.data.valid);
+			setdata({
+				username: localInfo.username,
+				loggedIn: res.data.valid,
+			});
 		});
 	};
 	const register = (regInfo) => {
@@ -51,7 +55,11 @@ function Login(props) {
 		});
 	};
 	// Handlers
-
+	const switchAuthMode = () => {
+		setIslogin(() => {
+			return !isLogin;
+		});
+	};
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 
@@ -66,7 +74,7 @@ function Login(props) {
 		event.preventDefault();
 		console.log('Local state from Login/Register.jsx');
 		console.log(localInfo);
-		if (!reg) {
+		if (isLogin) {
 			login(localInfo);
 		} else {
 			register(localInfo);
@@ -101,18 +109,14 @@ function Login(props) {
 						type='submit'
 						className='fadeIn fourth btn-1'
 					>
-						{!reg ? 'Login' : 'Register'}
+						{isLogin ? 'Login' : 'Register'}
 					</button>
 				</form>
 				<div id='formFooter'>
-					<a
-						onClick={() => {
-							!reg ? setReg(false) : setReg(true);
-						}}
-						className='underlineHover'
-						href='#top'
-					>
-						{!reg ? 'Don´t have an account?' : 'Already have an account?'}
+					<a onClick={switchAuthMode} className='underlineHover' href='#top'>
+						{isLogin
+							? 'Already have an account?'
+							: 'Dont´t have an account yet?'}
 					</a>
 				</div>
 			</div>

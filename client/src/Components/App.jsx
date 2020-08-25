@@ -3,21 +3,16 @@ import { UserInfoContext } from '../Store';
 import Login from './Login';
 import Heading from './Heading';
 import View from './View';
+import { useEffect } from 'react';
 
 function App() {
 	const [data] = useContext(UserInfoContext);
-	//const [loggedIn] = useContext(UserInfoContext);
-	//const [user, setUser] = useState('');
 
-	const checkData = (userInfo) => {
-		console.log('Global state - From App.jsx');
-		console.log(userInfo);
-	};
 	return (
 		<div>
-			<Heading></Heading>
+			<Heading name={data.username}></Heading>
 
-			<Login></Login>
+			{data.loggedIn ? <View></View> : <Login></Login>}
 		</div>
 	);
 }

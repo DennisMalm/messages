@@ -80,11 +80,15 @@ app.post('/login', (req, res, next) => {
 	console.log(req.body);
 	passport.authenticate('local', (err, user, info) => {
 		if (err) throw err;
-		if (!user) res.send('No user exists.');
+		if (!user)
+			res.send({
+				valid: false,
+				message: 'No user exists.',
+			});
 		else {
 			req.logIn(user, (err) => {
 				if (err) throw err;
-				res.send('Successfully authenticated User.');
+				res.send({ valid: true, message: 'Successfully authenticated User.' });
 			});
 		}
 	})(req, res, next);
