@@ -3,7 +3,6 @@ import { UserInfoContext } from '../Store';
 import Login from './Login';
 import Heading from './Heading';
 import View from './View';
-import { useEffect } from 'react';
 
 function App() {
 	const [data] = useContext(UserInfoContext);
@@ -11,7 +10,6 @@ function App() {
 	return (
 		<div>
 			<Heading name={data.username}></Heading>
-
 			{data.loggedIn ? <View></View> : <Login></Login>}
 		</div>
 	);
