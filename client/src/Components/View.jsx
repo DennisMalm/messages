@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { UserInfoContext } from '../Store';
 import Flow from './Flow';
+import Form from './Form';
 function View() {
 	const [data, setdata] = useContext(UserInfoContext);
 	return (
@@ -11,6 +12,7 @@ function View() {
 			>
 				Logout
 			</button>
+			<Form name={data.username}></Form>
 			<Flow></Flow>
 		</div>
 	);
