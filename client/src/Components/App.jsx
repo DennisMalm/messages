@@ -1,15 +1,18 @@
 import React, { useContext } from 'react';
 import { UserInfoContext } from '../Store';
-import Landing from './Landing';
+import Login from './Login';
+import Heading from './Heading';
+import View from './View';
 
 function App() {
-	const [userInfo] = useContext(UserInfoContext);
+	const [data] = useContext(UserInfoContext);
 
-	const checkUser = () => {
-		console.log('Global state - From App.jsx');
-		console.log(userInfo);
-	};
-	return <Landing logUser={checkUser}></Landing>;
+	return (
+		<div>
+			<Heading></Heading>
+			{data.loggedIn ? <View></View> : <Login></Login>}
+		</div>
+	);
 }
 
 export default App;
