@@ -9,7 +9,7 @@ function App() {
 
 	return (
 		<div>
-			<Heading name={data.username}></Heading>
+			<Heading></Heading>
 			{data.loggedIn ? <View></View> : <Login></Login>}
 		</div>
 	);
