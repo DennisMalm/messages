@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import sendData from '../exchange';
 
-function Form() {
+function Form(props) {
 	const initialFormData = Object.freeze({
-		name: '',
+		name: props.username,
 		content: '',
 	});
 	const [formData, updateFormData] = useState(initialFormData);
