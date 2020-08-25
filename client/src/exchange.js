@@ -1,5 +1,5 @@
 export function sendData(formData) {
-	fetch('/message', {
+	fetch('/twitt', {
 		method: 'POST',
 		body: JSON.stringify(formData),
 		headers: {
@@ -25,5 +25,22 @@ export function update(data) {
 			console.log('Updated:' + JSON.stringify(createdMessage));
 		});
 }
+export async function checkUser(userInfo) {
+	console.log(userInfo);
+	console.log(JSON.stringify(userInfo.name));
 
+	fetch('/user', {
+		method: 'POST',
+		body: JSON.stringify(userInfo),
+		headers: {
+			'content-type': 'application/json',
+		},
+	}).then((response) =>
+		response.json().then((valid) => {
+			console.log(valid);
+
+			return valid.valid;
+		})
+	);
+}
 export default sendData;
