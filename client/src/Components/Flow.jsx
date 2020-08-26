@@ -8,7 +8,7 @@ function createCard(message) {
 		<Card
 			key={message._id}
 			id={message._id}
-			name={message.name}
+			author={message.name}
 			content={message.content}
 			like={message.likes}
 		/>
@@ -53,7 +53,7 @@ function Flow() {
 		console.log('Refresh count: ' + count);
 		setCount(count + 1);
 		getData();
-	}, 6000);
+	}, 3000);
 
 	//console.log(content);
 

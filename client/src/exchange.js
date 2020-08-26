@@ -1,5 +1,5 @@
 export function sendData(formData) {
-	fetch('/twitt', {
+	fetch('/message', {
 		method: 'POST',
 		body: JSON.stringify(formData),
 		headers: {

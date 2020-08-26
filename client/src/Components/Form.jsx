@@ -21,38 +21,38 @@ function Form(props) {
 		sendData(formData);
 	};
 	return (
-		<form className='container col-md-8 col-lg-6 col-xl-4'>
-			<div>
-				<label htmlFor='name'>Name</label>
-				<input
-					onChange={handleChange}
-					className='form-control col-sm-3'
-					type='text'
-					id='name'
-					name='name'
-					placeholder='Name'
-				></input>
-			</div>
-			<div>
-				<label htmlFor='twitt'>Twitt something</label>
-				<textarea
-					onChange={handleChange}
-					className='form-control'
-					id='twitt'
-					name='content'
-					rows='6'
-					placeholder='Twittering here...'
-				></textarea>
-				<button
-					onClick={handleSubmit}
-					id='sendTwitt'
-					type='submit'
-					className='btn btn-dark mt-2'
-				>
-					Click to send!
+		<div className='container col-md-8 col-lg-6 col-xl-4'>
+			<div className='d-flex justify-content-between'>
+				<h1>{props.username}</h1>
+
+				<button className='btn btn-dark' onClick={props.logout}>
+					Logout
 				</button>
 			</div>
-		</form>
+			<form className=''>
+				<div>
+					<label htmlFor='message'></label>
+					<textarea
+						onChange={handleChange}
+						className='form-control'
+						id='twitt'
+						name='content'
+						rows='6'
+						placeholder='Write your message ...'
+					></textarea>
+					<div className='d-flex justify-content-end'>
+						<button
+							onClick={handleSubmit}
+							id='sendTwitt'
+							type='submit'
+							className='btn btn-dark mt-2'
+						>
+							Click to send!
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
 	);
 }
 export default Form;
