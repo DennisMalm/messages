@@ -8,9 +8,10 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const path = require('path');
 require('dotenv').config();
-const User = require('./user');
-const Message = require('./message');
+const User = require('./Schema/user');
+const Message = require('./Schema/message');
 //--------------End of Imports-----------
 
 const app = express();
@@ -25,6 +26,8 @@ mongoose.connect(
 		console.log('Mongoose is connected.');
 	}
 );
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'client')));
 
 //------------Middleware------------------
 app.use(bodyParser.json());
@@ -61,13 +64,16 @@ app.get('/message', (req, res) => {
 	});
 });
 app.post('/message', (req, res) => {
+	console.log(req.body);
 	if (isValidMessage(req.body)) {
 		const message = new Message({
 			name: req.body.name.toString(),
 			content: req.body.content.toString(),
 			created: new Date(),
 			likes: 0,
+			likedBy: [{}],
 		});
+		console.log(message);
 		message.save();
 	} else {
 		res.status(422);
@@ -75,6 +81,33 @@ app.post('/message', (req, res) => {
 			message: 'Not a valid message.',
 		});
 	}
+});
+app.post('/update', (req, res) => {
+	const query = req.body.id;
+	const updateLikes = req.body.likes;
+	const updatedLikedBy = req.body.likedBy;
+	console.log(req.body);
+
+	Message.findOneAndUpdate(
+		{ _id: query },
+		{ $set: { likes: updateLikes, likedBy: [...updatedLikedBy] } },
+		{ new: true },
+		(err, found) => {
+			if (err) {
+				//console.log(err);
+				res.status(422);
+				res.json({
+					message: 'No such message.',
+				});
+			} else {
+				//console.log(found);
+				res.status(200);
+				res.json({
+					message: 'Message updated.',
+				});
+			}
+		}
+	);
 });
 app.post('/login', (req, res, next) => {
 	console.log(req.body);
@@ -126,7 +159,7 @@ function isValidMessage(message) {
 }
 
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/index.html'));
+	res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
 //--------Start server------------
 app.listen(5000, () => {

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import Card from './Card';
-import Loading from './Loading';
+import Card from '../Card/Card';
+import Loading from '../Loading/Loading';
 import { useEffect } from 'react';
 
 function createCard(message) {
@@ -8,7 +8,7 @@ function createCard(message) {
 		<Card
 			key={message._id}
 			id={message._id}
-			name={message.name}
+			author={message.name}
 			content={message.content}
 			like={message.likes}
 		/>
@@ -53,9 +53,7 @@ function Flow() {
 		console.log('Refresh count: ' + count);
 		setCount(count + 1);
 		getData();
-	}, 6000);
-
-	//console.log(content);
+	}, 3000);
 
 	return (
 		<div>{loading || !content ? <Loading /> : content.map(createCard)}</div>
