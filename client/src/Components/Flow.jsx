@@ -55,8 +55,6 @@ function Flow() {
 		getData();
 	}, 3000);
 
-	//console.log(content);
-
 	return (
 		<div>{loading || !content ? <Loading /> : content.map(createCard)}</div>
 	);

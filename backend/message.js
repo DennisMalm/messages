@@ -6,6 +6,7 @@ const message = new mongoose.Schema({
 	created: Date,
 	likes: Number,
 	created: { type: Date, default: Date() },
+	likedBy: Array,
 });
 
 module.exports = mongoose.model('Message', message);

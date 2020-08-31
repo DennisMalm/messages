@@ -38,21 +38,19 @@ function Card(props) {
 		console.log('Data to send');
 		update(messageData);
 	}  */
-	{
-		/* <button onClick={increase} className='btn btn-secondary'>
+
+	/* <button onClick={increase} className='btn btn-secondary'>
 					Like
 				</button>
 				<h4>{like}</h4>
 				<button onClick={decrease} className='btn btn-secondary'>
 					Dislike
 				</button> */
-	}
 
 	return (
 		<div className='container d-flex flex-column col-sm-6 col-md-4 mt-4 twittRoom'>
 			<h1>{props.author}</h1>
 			<h4>{props.content}</h4>
-			<p>{props.}</p>
 			<div className='container-fluid justify-content-between d-flex flex-row-reverse p-0'></div>
 		</div>
 	);
