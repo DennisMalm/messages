@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import sendData from '../exchange';
+import sendData from '../../exchange';
 
 function Form(props) {
 	const initialFormData = Object.freeze({

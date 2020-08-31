@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { update } from '../exchange';
+import { update } from '../../exchange';
 import { useEffect } from 'react';
-import { UserInfoContext } from '../Store';
+import { UserInfoContext } from '../../Store';
 
 function Card(props) {
 	const [like, setLike] = useState(props.like);

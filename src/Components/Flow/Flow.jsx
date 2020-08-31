@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import Card from './Card';
-import Loading from './Loading';
+import Card from '../Card/Card';
+import Loading from '../Loading/Loading';
 import { useEffect } from 'react';
 
 function createCard(message) {

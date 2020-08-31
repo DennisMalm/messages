@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { UserInfoContext } from '../Store';
-import Flow from './Flow';
-import Form from './Form';
+import { UserInfoContext } from '../../Store';
+import Flow from '../Flow/Flow';
+import Form from '../Form/Form';
 function View() {
 	const [data, setdata] = useContext(UserInfoContext);
 

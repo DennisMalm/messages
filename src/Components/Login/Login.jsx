@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { UserInfoContext } from '../Store';
-import '../Styles/Login.css';
+import { UserInfoContext } from '../../Store';
+import './Login.css';
 import axios from 'axios';
 
 function Login() {
