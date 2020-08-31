@@ -104,6 +104,7 @@ function Login() {
 						value={localInfo.password}
 						placeholder='password'
 					></input>
+
 					<button
 						onClick={handleSubmit}
 						type='submit'
@@ -115,8 +116,8 @@ function Login() {
 				<div id='formFooter'>
 					<a onClick={switchAuthMode} className='underlineHover' href='#top'>
 						{isLogin
-							? 'Already have an account?'
-							: 'Dont´t have an account yet?'}
+							? 'Dont´t have an account yet?'
+							: 'Already have an account?'}
 					</a>
 				</div>
 			</div>

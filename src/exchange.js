@@ -1,19 +1,17 @@
-export const getMessages = () => {
-	fetch('/message').then((res) =>
+export const getMessages = async () => {
+	return await fetch('/message').then((res) =>
 		res.json().then((data) => {
-			return data.reverse();
+			data.reverse();
 		})
 	);
 };
 
-/* async function getData() {
+export const getData = async () => {
 	const res = await fetch('/message');
 	const data = await res.json();
 	const list = data.reverse();
-	setContent(list);
-	setLoading(false);
-	console.log(list); */
-
+	return list;
+};
 export function sendData(formData) {
 	fetch('/message', {
 		method: 'POST',

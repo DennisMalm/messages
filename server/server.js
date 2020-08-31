@@ -71,7 +71,7 @@ app.post('/message', (req, res) => {
 			content: req.body.content.toString(),
 			created: new Date(),
 			likes: 0,
-			likedBy: [{}],
+			likedBy: [],
 		});
 		console.log(message);
 		message.save();
