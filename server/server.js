@@ -10,8 +10,8 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
-const User = require('./user');
-const Message = require('./message');
+const User = require('./Schema/user');
+const Message = require('./Schema/message');
 //--------------End of Imports-----------
 
 const app = express();
@@ -32,12 +32,7 @@ app.use(express.static(path.join(__dirname, 'client')));
 //------------Middleware------------------
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-	cors({
-		origin: 'http://localhost:3000', // <--- React app location
-		credentials: true,
-	})
-);
+app.use(cors());
 
 app.use(
 	session({
