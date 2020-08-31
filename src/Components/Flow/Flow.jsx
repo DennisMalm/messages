@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import Card from '../Card/Card';
 import Loading from '../Loading/Loading';
 import { useEffect } from 'react';
+import { getMessages } from '../../exchange';
 
 function createCard(message) {
 	return (
@@ -40,19 +41,23 @@ function Flow() {
 	const [content, setContent] = useState([]);
 	const [count, setCount] = useState(0);
 
-	async function getData() {
+	/* async function getData() {
 		const res = await fetch('/message');
 		const data = await res.json();
 		const list = data.reverse();
 		setContent(list);
 		setLoading(false);
 		console.log(list);
-	}
-
+	} */
+	const updateFlow = async () => {
+		const bla = await getMessages();
+		console.log(bla);
+		//await getMessages((messages) => console.log(messages));
+	};
 	useInterval(() => {
 		console.log('Refresh count: ' + count);
 		setCount(count + 1);
-		getData();
+		updateFlow();
 	}, 3000);
 
 	return (

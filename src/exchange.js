@@ -1,3 +1,19 @@
+export const getMessages = () => {
+	fetch('/message').then((res) =>
+		res.json().then((data) => {
+			return data.reverse();
+		})
+	);
+};
+
+/* async function getData() {
+	const res = await fetch('/message');
+	const data = await res.json();
+	const list = data.reverse();
+	setContent(list);
+	setLoading(false);
+	console.log(list); */
+
 export function sendData(formData) {
 	fetch('/message', {
 		method: 'POST',
