@@ -1,9 +1,13 @@
-export const getMessages = async () => {
-	return await fetch('/message').then((res) =>
-		res.json().then((data) => {
-			data.reverse();
+import { useCallback } from 'react';
+
+export const getMessages = async (cb) => {
+	fetch('/message')
+		.then((res) => {
+			return res.json();
 		})
-	);
+		.then((data) => {
+			cb(data);
+		});
 };
 
 export const getData = async () => {

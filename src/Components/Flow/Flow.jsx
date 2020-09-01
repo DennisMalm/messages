@@ -42,8 +42,10 @@ function Flow() {
 	const [count, setCount] = useState(0);
 
 	const updateFlow = async () => {
-		setContent(await getData());
-		setLoading(false);
+		await getMessages((messages) => {
+			setContent(messages);
+		});
+		setLoading(!content ? true : false);
 	};
 	useInterval(() => {
 		console.log('Refresh count: ' + count);
@@ -52,7 +54,7 @@ function Flow() {
 	}, 3000);
 
 	return (
-		<div>{loading || !content ? <Loading /> : content.map(createCard)}</div>
+		<div>{!content || loading ? <Loading /> : content.map(createCard)}</div>
 	);
 }
 export default Flow;
