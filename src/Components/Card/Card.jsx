@@ -16,41 +16,79 @@ function Card(props) {
 			return false;
 		}
 	}; */
-	/* function increase() {
-		if (validLike) {
-			setLike((prevLike) => prevLike + 1);
-		}
-	}
-	function decrease() {
-		if (validLike) {
-			setLike((prevLike) => prevLike - 1);
-		}
-	}
-	useEffect(() => {
-		console.log(props.likedBy);
-		const messageData = { likes: like, id: props.id, likedBy: data.username };
-		console.log('Data to send');
-		update(messageData);
-	}, [like, props.id, data.username, props.author]); */
 
-	/* function sendUpdate() {
-		const messageData = { likes: like, id: props.id };
-		console.log('Data to send');
-		update(messageData);
-	}  */
+	// Testa att lägga in logik för att ta bort eller lägga till like i backend
+	const increase = async () => {
+		if (props.author === data.username) {
+			console.log(`Can´t like your own message ${data.username}.`);
+		} else if (props.likedBy.includes(data.username)) {
+			console.log('You have already liked this message. Removing like.');
+			setLike((prev) => prev - 1);
+			sendUpdate(true);
+			props.refresh();
+		} else {
+			console.log(`Sending your like to ${props.author}.`);
+			setLike((prev) => prev + 1);
+			sendUpdate(false);
+			props.refresh();
+		}
 
-	/* <button onClick={increase} className='btn btn-secondary'>
-					Like
-				</button>
-				<h4>{like}</h4>
-				<button onClick={decrease} className='btn btn-secondary'>
-					Dislike
-				</button> */
+		/* if (
+			props.author === data.username ||
+			props.likedBy.includes(data.username)
+		) {
+			console.log('Cant like this message');
+		} else {
+			console.log('You liked a message');
+			await setLike((prevValue) => prevValue + 1);
+			sendUpdate(true);
+		} */
+		//setLike((prevLike) => prevLike + 1);
+	};
+
+	const sendUpdate = (remove) => {
+		const messageUpdate = {
+			likes: like,
+			id: props.id,
+			likedBy: data.username,
+			remove: remove,
+		};
+		console.log('Data to send');
+		update(messageUpdate);
+	};
+
+	/* useEffect(() => {
+		function sendUpdate() {
+			const messageUpdate = {
+				likes: like,
+				id: props.id,
+				likedBy: data.username,
+			};
+			console.log('Data to send');
+			update(messageUpdate);
+		}
+		sendUpdate();
+	}, [like, props.id, data.username]); */
+
+	/* const showUserAndAuthor = () => {
+		console.log(props.author);
+		console.log(data.username);
+	}; */
 
 	return (
 		<div className='container d-flex flex-column col-sm-6 col-md-4 mt-4 twittRoom'>
 			<h1>{props.author}</h1>
 			<h4>{props.content}</h4>
+			<p>{props.created}</p>
+			<button
+				onClick={increase}
+				className={`btn ${
+					props.author === data.username ? 'btn-primary' : 'btn-secondary'
+				}`}
+			>
+				Like
+			</button>
+			<h4>{like}</h4>
 			<div className='container-fluid justify-content-between d-flex flex-row-reverse p-0'></div>
 		</div>
 	);

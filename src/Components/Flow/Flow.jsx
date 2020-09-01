@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import Card from '../Card/Card';
 import Loading from '../Loading/Loading';
 import { useEffect } from 'react';
-import { getMessages, getData } from '../../exchange';
+import { getMessages } from '../../exchange';
 
-function createCard(message) {
+/* const createCard = (message) => {
 	return (
 		<Card
 			key={message._id}
@@ -12,9 +12,12 @@ function createCard(message) {
 			author={message.name}
 			content={message.content}
 			like={message.likes}
+			created={message.created}
+			likedBy={message.likedBy}
+			
 		/>
 	);
-}
+} */
 
 function useInterval(callback, delay) {
 	const savedCallback = useRef();
@@ -36,25 +39,42 @@ function useInterval(callback, delay) {
 	}, [delay]);
 }
 
-function Flow() {
+const Flow = () => {
 	const [loading, setLoading] = useState(true);
 	const [content, setContent] = useState([]);
 	const [count, setCount] = useState(0);
 
 	const updateFlow = async () => {
 		await getMessages((messages) => {
+			messages.reverse();
 			setContent(messages);
 		});
 		setLoading(!content ? true : false);
 	};
+
+	const createCard = (message) => {
+		return (
+			<Card
+				key={message._id}
+				id={message._id}
+				author={message.name}
+				content={message.content}
+				like={message.likes}
+				created={message.created}
+				likedBy={message.likedBy}
+				refresh={updateFlow}
+			/>
+		);
+	};
+
 	useInterval(() => {
 		console.log('Refresh count: ' + count);
 		setCount(count + 1);
 		updateFlow();
-	}, 3000);
+	}, 6500);
 
 	return (
 		<div>{!content || loading ? <Loading /> : content.map(createCard)}</div>
 	);
-}
+};
 export default Flow;

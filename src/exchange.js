@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 export const getMessages = async (cb) => {
 	fetch('/message')
 		.then((res) => {
