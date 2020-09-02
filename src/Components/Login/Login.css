@@ -1,8 +1,17 @@
 /* BASIC */
+/*
+colors:
+46, 97, 113
+85, 111, 122
+121, 128, 134
+93, 253, 203
+238, 66, 102
 
+*/
 body {
 	font-family: 'Poppins', sans-serif;
 	height: 100vh;
+	background-color: #2e6171;
 }
 
 a {

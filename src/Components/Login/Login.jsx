@@ -8,7 +8,11 @@ function Login() {
 	const [, setdata] = useContext(UserInfoContext);
 	//const [loggedIn, setLoggedIn] = useContext(UserInfoContext);
 	// Local
-	const [localInfo, setLocalInfo] = useState({ username: '', password: '' });
+	const [localInfo, setLocalInfo] = useState({
+		username: '',
+		password: '',
+		confirmPassword: '',
+	});
 	const [isLogin, setIslogin] = useState(true);
 
 	// Connection methods
@@ -54,12 +58,24 @@ function Login() {
 			setdata(res.data);
 		});
 	};
+
 	// Handlers
+	const resetForm = () => {
+		setLocalInfo(
+			setLocalInfo({
+				username: '',
+				password: '',
+				confirmPassword: '',
+			})
+		);
+	};
+
 	const switchAuthMode = () => {
 		setIslogin(() => {
 			return !isLogin;
 		});
 	};
+
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 
@@ -76,8 +92,11 @@ function Login() {
 		console.log(localInfo);
 		if (isLogin) {
 			login(localInfo);
-		} else {
+		} else if (localInfo.password === localInfo.confirmPassword) {
 			register(localInfo);
+		} else {
+			resetForm();
+			alert('Password did not match!');
 		}
 	};
 
@@ -102,8 +121,19 @@ function Login() {
 						className='fadeIn third'
 						name='password'
 						value={localInfo.password}
-						placeholder='password'
+						placeholder='Password'
 					></input>
+					{!isLogin ? (
+						<input
+							onChange={handleChange}
+							type='text'
+							id='confirmPassword'
+							className='fadeIn third'
+							name='confirmPassword'
+							value={localInfo.confirmPassword}
+							placeholder='Confirm Password'
+						></input>
+					) : null}
 
 					<button
 						onClick={handleSubmit}

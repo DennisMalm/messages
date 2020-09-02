@@ -1,23 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import Card from '../Card/Card';
 import Loading from '../Loading/Loading';
 import { useEffect } from 'react';
 import { getMessages } from '../../exchange';
-
-/* const createCard = (message) => {
-	return (
-		<Card
-			key={message._id}
-			id={message._id}
-			author={message.name}
-			content={message.content}
-			like={message.likes}
-			created={message.created}
-			likedBy={message.likedBy}
-			
-		/>
-	);
-} */
+import { UserInfoContext } from '../../Store';
+import { update } from '../../exchange';
 
 function useInterval(callback, delay) {
 	const savedCallback = useRef();
@@ -40,6 +27,7 @@ function useInterval(callback, delay) {
 }
 
 const Flow = () => {
+	const [data] = useContext(UserInfoContext);
 	const [loading, setLoading] = useState(true);
 	const [content, setContent] = useState([]);
 	const [count, setCount] = useState(0);
@@ -51,7 +39,11 @@ const Flow = () => {
 		});
 		setLoading(!content ? true : false);
 	};
-
+	const someupdate = (messageUpdate) => {
+		console.log('TEST UPDATE!');
+		console.log(messageUpdate);
+		update(messageUpdate);
+	};
 	const createCard = (message) => {
 		return (
 			<Card
@@ -62,7 +54,9 @@ const Flow = () => {
 				like={message.likes}
 				created={message.created}
 				likedBy={message.likedBy}
+				loggedIn={data.username}
 				refresh={updateFlow}
+				updateFromFlow={someupdate}
 			/>
 		);
 	};

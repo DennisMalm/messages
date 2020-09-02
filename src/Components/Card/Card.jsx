@@ -7,16 +7,6 @@ function Card(props) {
 	const [like, setLike] = useState(props.like);
 	const [data] = useContext(UserInfoContext);
 
-	/* const validLike = () => {
-		if (props.author === data.username) {
-			console.log(`${data.username} can't like your own message.`);
-			return true;
-		} else if (!props.likedBy.includes(data.username)) {
-			console.log(`${data.username} has liked a message.`);
-			return false;
-		}
-	}; */
-
 	// Testa att lägga in logik för att ta bort eller lägga till like i backend
 	const increase = async () => {
 		if (props.author === data.username) {
@@ -32,18 +22,6 @@ function Card(props) {
 			sendUpdate(false);
 			props.refresh();
 		}
-
-		/* if (
-			props.author === data.username ||
-			props.likedBy.includes(data.username)
-		) {
-			console.log('Cant like this message');
-		} else {
-			console.log('You liked a message');
-			await setLike((prevValue) => prevValue + 1);
-			sendUpdate(true);
-		} */
-		//setLike((prevLike) => prevLike + 1);
 	};
 
 	const sendUpdate = (remove) => {
@@ -53,8 +31,9 @@ function Card(props) {
 			likedBy: data.username,
 			remove: remove,
 		};
-		console.log('Data to send');
-		update(messageUpdate);
+		props.updateFromFlow(messageUpdate);
+		//console.log('Data to send');
+		//update(messageUpdate);
 	};
 
 	/* useEffect(() => {
