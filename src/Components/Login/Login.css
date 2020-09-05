@@ -1,8 +1,17 @@
 /* BASIC */
+/*
+colors:
+46, 97, 113
+85, 111, 122
+121, 128, 134
+93, 253, 203
+238, 66, 102
 
+*/
 body {
 	font-family: 'Poppins', sans-serif;
 	height: 100vh;
+	background-color: #ffffff;
 }
 
 a {
@@ -111,7 +120,8 @@ input[type='reset']:active {
 	transform: scale(0.95);
 }
 
-input[type='text'] {
+input[type='text'],
+input[type='password'] {
 	background-color: #f6f6f6;
 	border: none;
 	color: #0d0d0d;

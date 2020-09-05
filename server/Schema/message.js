@@ -4,9 +4,10 @@ const message = new mongoose.Schema({
 	name: String,
 	content: String,
 	created: Date,
-	likes: Number,
+	likes: { type: Number, default: 0 },
 	created: { type: Date, default: Date() },
-	likedBy: Array,
+	likedBy: [{ type: String }],
+	dislikedBy: [{ type: String }],
 });
 
 module.exports = mongoose.model('Message', message);

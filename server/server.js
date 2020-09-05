@@ -63,16 +63,10 @@ app.get('/message', (req, res) => {
 		res.json(fetchedMessages);
 	});
 });
+
 app.post('/message', (req, res) => {
-	console.log(req.body);
 	if (isValidMessage(req.body)) {
-		const message = new Message({
-			name: req.body.name.toString(),
-			content: req.body.content.toString(),
-			created: new Date(),
-			likes: 0,
-			likedBy: [{}],
-		});
+		const message = new Message(req.body);
 		console.log(message);
 		message.save();
 	} else {
@@ -83,31 +77,55 @@ app.post('/message', (req, res) => {
 	}
 });
 app.post('/update', (req, res) => {
+	console.log('Update req.body');
+	console.log(req.body);
 	const query = req.body.id;
 	const updateLikes = req.body.likes;
-	const updatedLikedBy = req.body.likedBy;
-	console.log(req.body);
+	const updateLikeBy = req.body.likedBy;
+	console.log(`Liked by: ${updateLikeBy}`);
+	//console.log(req.body);
+	if (!req.body.remove) {
+		Message.findOneAndUpdate(
+			{ _id: query },
+			{ $set: { likes: updateLikes }, $push: { likedBy: updateLikeBy } },
 
-	Message.findOneAndUpdate(
-		{ _id: query },
-		{ $set: { likes: updateLikes, likedBy: [...updatedLikedBy] } },
-		{ new: true },
-		(err, found) => {
-			if (err) {
-				//console.log(err);
-				res.status(422);
-				res.json({
-					message: 'No such message.',
-				});
-			} else {
-				//console.log(found);
-				res.status(200);
-				res.json({
-					message: 'Message updated.',
-				});
+			{ new: true },
+			(err, found) => {
+				if (err) {
+					//console.log(err);
+					res.status(422);
+					res.json({
+						message: 'No such message.',
+					});
+				} else {
+					//console.log(found);
+					res.status(200);
+					res.json({
+						message: 'Message updated.',
+					});
+				}
 			}
-		}
-	);
+		);
+	} else {
+		console.log(`${req.body.likedBy} have unliked message`);
+
+		Message.findOneAndUpdate(
+			{ _id: query },
+			{ $set: { likes: updateLikes }, $pull: { likedBy: updateLikeBy } },
+			{ new: true },
+			(err, success) => {
+				if (err) {
+					res.status(422);
+					res.send({
+						message: 'Couldnt find the document...',
+					});
+				} else {
+					res.status(200);
+					res.json({ message: 'Likes updated' });
+				}
+			}
+		);
+	}
 });
 app.post('/login', (req, res, next) => {
 	console.log(req.body);

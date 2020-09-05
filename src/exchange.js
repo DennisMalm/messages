@@ -1,3 +1,18 @@
+export const getMessages = async (cb) => {
+	fetch('/message')
+		.then((res) => {
+			return res.json();
+		})
+		.then((data) => {
+			cb(data);
+		});
+};
+export const getData = async () => {
+	const res = await fetch('/message');
+	const data = await res.json();
+	const list = data.reverse();
+	return list;
+};
 export function sendData(formData) {
 	fetch('/message', {
 		method: 'POST',
@@ -11,8 +26,7 @@ export function sendData(formData) {
 			console.log('Created: ' + JSON.stringify(createdMessage));
 		});
 }
-export function update(data) {
-	console.log(data);
+export function updateMessage(data) {
 	fetch('/update', {
 		method: 'POST',
 		body: JSON.stringify(data),
@@ -43,4 +57,5 @@ export async function checkUser(userInfo) {
 		})
 	);
 }
+// ------
 export default sendData;

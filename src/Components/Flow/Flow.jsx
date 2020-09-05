@@ -1,19 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import Card from '../Card/Card';
 import Loading from '../Loading/Loading';
 import { useEffect } from 'react';
-
-function createCard(message) {
-	return (
-		<Card
-			key={message._id}
-			id={message._id}
-			author={message.name}
-			content={message.content}
-			like={message.likes}
-		/>
-	);
-}
+import { getMessages } from '../../exchange';
+import { UserInfoContext } from '../../Store';
+import { updateMessage } from '../../exchange';
 
 function useInterval(callback, delay) {
 	const savedCallback = useRef();
@@ -35,28 +26,47 @@ function useInterval(callback, delay) {
 	}, [delay]);
 }
 
-function Flow() {
+const Flow = () => {
+	const [data] = useContext(UserInfoContext);
 	const [loading, setLoading] = useState(true);
 	const [content, setContent] = useState([]);
 	const [count, setCount] = useState(0);
 
-	async function getData() {
-		const res = await fetch('/message');
-		const data = await res.json();
-		const list = data.reverse();
-		setContent(list);
-		setLoading(false);
-		console.log(list);
-	}
+	const updateFlow = async () => {
+		await getMessages((messages) => {
+			messages.reverse();
+			setContent(messages);
+		});
+		setLoading(!content ? true : false);
+	};
+	const updateCard = (messageUpdate) => {
+		updateMessage(messageUpdate);
+	};
+	const createCard = (message) => {
+		return (
+			<Card
+				key={message._id}
+				id={message._id}
+				author={message.name}
+				content={message.content}
+				like={message.likes}
+				created={message.created}
+				likedBy={message.likedBy}
+				loggedIn={data.username}
+				refresh={updateFlow}
+				updateFromFlow={updateCard}
+			/>
+		);
+	};
 
 	useInterval(() => {
 		console.log('Refresh count: ' + count);
 		setCount(count + 1);
-		getData();
-	}, 3000);
+		updateFlow();
+	}, 6500);
 
 	return (
-		<div>{loading || !content ? <Loading /> : content.map(createCard)}</div>
+		<div>{!content || loading ? <Loading /> : content.map(createCard)}</div>
 	);
-}
+};
 export default Flow;
