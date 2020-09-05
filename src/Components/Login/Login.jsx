@@ -116,7 +116,7 @@ function Login() {
 					></input>
 					<input
 						onChange={handleChange}
-						type='text'
+						type='password'
 						id='password'
 						className='fadeIn third'
 						name='password'
@@ -126,7 +126,7 @@ function Login() {
 					{!isLogin ? (
 						<input
 							onChange={handleChange}
-							type='text'
+							type='password'
 							id='confirmPassword'
 							className='fadeIn third'
 							name='confirmPassword'

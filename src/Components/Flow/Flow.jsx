@@ -4,7 +4,7 @@ import Loading from '../Loading/Loading';
 import { useEffect } from 'react';
 import { getMessages } from '../../exchange';
 import { UserInfoContext } from '../../Store';
-import { update } from '../../exchange';
+import { updateMessage } from '../../exchange';
 
 function useInterval(callback, delay) {
 	const savedCallback = useRef();
@@ -39,10 +39,8 @@ const Flow = () => {
 		});
 		setLoading(!content ? true : false);
 	};
-	const someupdate = (messageUpdate) => {
-		console.log('TEST UPDATE!');
-		console.log(messageUpdate);
-		update(messageUpdate);
+	const updateCard = (messageUpdate) => {
+		updateMessage(messageUpdate);
 	};
 	const createCard = (message) => {
 		return (
@@ -56,7 +54,7 @@ const Flow = () => {
 				likedBy={message.likedBy}
 				loggedIn={data.username}
 				refresh={updateFlow}
-				updateFromFlow={someupdate}
+				updateFromFlow={updateCard}
 			/>
 		);
 	};

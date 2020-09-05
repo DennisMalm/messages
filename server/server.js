@@ -63,25 +63,7 @@ app.get('/message', (req, res) => {
 		res.json(fetchedMessages);
 	});
 });
-/* app.post('/message', (req, res) => {
-	console.log(req.body);
-	if (isValidMessage(req.body)) {
-		const message = new Message({
-			name: req.body.name.toString(),
-			content: req.body.content.toString(),
-			created: new Date(),
-			likes: 0,
-			likedBy: [],
-		});
-		console.log(message);
-		message.save();
-	} else {
-		res.status(422);
-		res.json({
-			message: 'Not a valid message.',
-		});
-	}
-}); */
+
 app.post('/message', (req, res) => {
 	if (isValidMessage(req.body)) {
 		const message = new Message(req.body);
